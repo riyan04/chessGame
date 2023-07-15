@@ -180,23 +180,23 @@ export default function Referee() {
         const updatedPieces = pieces.reduce((results, piece) => {
             if (piece.posX === promotionPawn.posX && piece.posY === promotionPawn.posY) {
                 piece.pieceType = type;
-                const team = (piece.teamType === "OUR") ? "l" : "d";
+                const team = (piece.teamType === "OUR") ? "OUR" : "OPONENT";
                 let pieceImage = "";
                 switch (type) {
                     case "ROOK":
-                        pieceImage = "r";
+                        pieceImage = "ROOK";
                         break;
                     case "KNIGHT":
-                        pieceImage = "n";
+                        pieceImage = "KNIGHT";
                         break;
                     case "BISHOP":
-                        pieceImage = "b";
+                        pieceImage = "BISHOP";
                         break;
                     case "QUEEN":
-                        pieceImage = "q";
+                        pieceImage = "QUEEN";
                         break;
                 }
-                piece.src = `/assets/Chess_${pieceImage}${team}t45.svg`;
+                piece.src = `/assets/Chess_${pieceImage}_${team}t45.svg`;
             }
             results.push(piece);
             return results;
@@ -205,17 +205,17 @@ export default function Referee() {
         modalRef.current.classList.add("hidden")
     }
     function promotionTeamType() {
-        return (promotionPawn?.teamType === "OUR") ? "l" : "d";
+        return (promotionPawn?.teamType === "OUR") ? "OUR" : "OPONENT";
     }
 
     return (
         <>
             <div className=' absolute top-0 bottom-0 right-0 left-0 hidden' ref={modalRef}>
                 <div className=' absolute flex items-center justify-around  w-[720px] h-[300px] bg-black/[0.4]  top-[240px] left-[25%]'>
-                    <img onClick={() => promotePawn("ROOK")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_r${promotionTeamType()}t45.svg`} />
-                    <img onClick={() => promotePawn("KNIGHT")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_n${promotionTeamType()}t45.svg`} />
-                    <img onClick={() => promotePawn("BISHOP")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_b${promotionTeamType()}t45.svg`} />
-                    <img onClick={() => promotePawn("QUEEN")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_q${promotionTeamType()}t45.svg`} />
+                    <img onClick={() => promotePawn("ROOK")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_ROOK_${promotionTeamType()}t45.svg`} />
+                    <img onClick={() => promotePawn("KNIGHT")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_KNIGHT_${promotionTeamType()}t45.svg`} />
+                    <img onClick={() => promotePawn("BISHOP")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_BISHOP_${promotionTeamType()}t45.svg`} />
+                    <img onClick={() => promotePawn("QUEEN")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_QUEEN_${promotionTeamType()}t45.svg`} />
                 </div>
             </div>
             <Chessboard

@@ -24,8 +24,8 @@ export class Piece{
     teamType;
     pieceEnPassant;
     possibleMoves;
-    constructor(Image, x, y, type, team, enPassant = false, moves = []){
-        this.src = Image;
+    constructor(x, y, type, team, enPassant = false, moves = []){
+        this.src = `/assets/Chess_${type}_${team}t45.svg`;
         this.posX = x;
         this.posY = y;
         this.pieceType = type;
