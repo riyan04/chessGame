@@ -56,7 +56,7 @@ export default function Referee() {
 
             const updatedPieces = pieces.reduce((results, piece) => {
                 if (piece.posX === playedPiece.posX && piece.posY === playedPiece.posY) {
-                    console.log(`x: ${piece.posX}, y: ${piece.posY}...same pos!!`);
+                    // console.log(`x: ${piece.posX}, y: ${piece.posY}...same pos!!`);
                     // SPECIAL MOVE!
                     piece.pieceEnPassant = (Math.abs(playedPiece.posY - destinationY) === 2 && piece.pieceType === "PAWN") ? true : false;
                     piece.posX = destinationX;

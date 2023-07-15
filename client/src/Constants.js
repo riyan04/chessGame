@@ -2,7 +2,7 @@
 // And these two axies are divided into 8 cols and rows respectively
 // So this make a gird of 8X8
 
-// import { Piece } from "./models/Piece";
+import { Piece } from "./models/Piece";
 
 export const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h",]
 export const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"]
@@ -16,251 +16,65 @@ export class Position{
     }
 }
 
-export class Piece{
-    constructor(Image, x, y, type, team, enPassant = false, moves = []){
-        this.src = Image;
-        this.posX = x;
-        this.posY = y;
-        this.pieceType = type;
-        this.teamType = team;
-        this.pieceEnPassant = enPassant;
-        this.possibleMoves = moves;
-    }
-}
 
 
 export const initialBoardState =  [
     // ROOK
-    {
-        src: "/assets/Chess_rlt45.svg",
-        posX: 0,
-        posY: 0,
-        pieceType: "ROOK",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_rlt45.svg",
-        posX: 7,
-        posY: 0,
-        pieceType: "ROOK",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_rdt45.svg",
-        posX: 0,
-        posY: 7,
-        pieceType: "ROOK",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_rdt45.svg",
-        posX: 7,
-        posY: 7,
-        pieceType: "ROOK",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_rlt45.svg", 0, 0, "ROOK", "OUR"),
+    new Piece("/assets/Chess_rlt45.svg", 7, 0, "ROOK", "OUR"),
+
+    new Piece("/assets/Chess_rdt45.svg", 0, 7, "ROOK", "OPONENT"),
+    new Piece("/assets/Chess_rdt45.svg", 7, 7, "ROOK", "OPONENT"),
+    
+
+
     // KNIGHT
-    {
-        src: "/assets/Chess_nlt45.svg",
-        posX: 1,
-        posY: 0,
-        pieceType: "KNIGHT",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_nlt45.svg",
-        posX: 6,
-        posY: 0,
-        pieceType: "KNIGHT",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_ndt45.svg",
-        posX: 1, // CHANGED
-        posY: 7,
-        pieceType: "KNIGHT",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_ndt45.svg",
-        posX: 6,
-        posY: 7,
-        pieceType: "KNIGHT",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_nlt45.svg", 1, 0, "KNIGHT", "OUR"),
+    new Piece("/assets/Chess_nlt45.svg", 6, 0, "KNIGHT", "OUR"),
+
+    new Piece("/assets/Chess_ndt45.svg", 1, 7, "KNIGHT", "OPONENT"),
+    new Piece("/assets/Chess_ndt45.svg", 6, 7, "KNIGHT", "OPONENT"),
+    
+
     // BISHOP
-    {
-        src: "/assets/Chess_blt45.svg",
-        posX: 2,
-        posY: 0,
-        pieceType: "BISHOP",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_blt45.svg",
-        posX: 5,
-        posY: 0,
-        pieceType: "BISHOP",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_bdt45.svg",
-        posX: 2,
-        posY: 7,
-        pieceType: "BISHOP",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_bdt45.svg",
-        posX: 5,
-        posY: 7,
-        pieceType: "BISHOP",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_blt45.svg", 2, 0, "BISHOP", "OUR"),
+    new Piece("/assets/Chess_blt45.svg", 5, 0, "BISHOP", "OUR"),
+
+    new Piece("/assets/Chess_bdt45.svg", 2, 7, "BISHOP", "OPONENT"),
+    new Piece("/assets/Chess_bdt45.svg", 5, 7, "BISHOP", "OPONENT"),
+    
+
+
     // QUEEN
-    {
-        src: "/assets/Chess_qlt45.svg",
-        posX: 3,
-        posY: 0,
-        pieceType: "QUEEN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_qdt45.svg",
-        posX: 3,
-        posY: 7,
-        pieceType: "QUEEN",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_qlt45.svg", 3, 0, "QUEEN", "OUR"),
+    new Piece("/assets/Chess_qdt45.svg", 3, 7, "QUEEN", "OPONENT"),
+    
+
+
     // KING
-    {
-        src: "/assets/Chess_klt45.svg",
-        posX: 4,
-        posY: 0,
-        pieceType: "KING",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_kdt45.svg",
-        posX: 4,
-        posY: 7,
-        pieceType: "KING",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_klt45.svg", 4, 0, "KING", "OUR"),
+    new Piece("/assets/Chess_kdt45.svg", 4, 7, "KING", "OPONENT"),
+    
     // OUR PAWN
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 0,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 1,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 2,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 3,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 4,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 5,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 6,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
-    {
-        src: "/assets/Chess_plt45.svg",
-        posX: 7,
-        posY: 1,
-        pieceType: "PAWN",
-        teamType: "OUR",
-    },
+    new Piece("/assets/Chess_plt45.svg", 0, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 1, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 2, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 3, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 4, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 5, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 6, 1, "PAWN", "OUR"),
+    new Piece("/assets/Chess_plt45.svg", 7, 1, "PAWN", "OUR"),
+    
     // OPONENT PAWN
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 0,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 1,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 2,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 3,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 4,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 5,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 6,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
-    {
-        src: "/assets/Chess_pdt45.svg",
-        posX: 7,
-        posY: 6,
-        pieceType: "PAWN",
-        teamType: "OPONENT",
-    },
+    new Piece("/assets/Chess_pdt45.svg", 0, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 1, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 2, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 3, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 4, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 5, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 6, 6, "PAWN", "OPONENT"),
+    new Piece("/assets/Chess_pdt45.svg", 7, 6, "PAWN", "OPONENT"),
+    
 
 
 ];

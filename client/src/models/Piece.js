@@ -7,15 +7,23 @@
 //     enpassant;
 //     possibleMoves;
 
-//     constructor(image, position, type, team){
+//     constructor(image, x, y, type, team){
 //         this.image = image,
-//         this.posX
+//         this.posX = x,
+//         this.posY = y,
 //         this.type = type,
 //         this.team = team
 //     }
 // }
 
 export class Piece{
+    src;
+    posX;
+    posY;
+    pieceType;
+    teamType;
+    pieceEnPassant;
+    possibleMoves;
     constructor(Image, x, y, type, team, enPassant = false, moves = []){
         this.src = Image;
         this.posX = x;
