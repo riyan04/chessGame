@@ -1,4 +1,5 @@
 import { tileIsEmptyOrOccupiedByOponent, tileIsOccupied } from "./GeneralRules";
+import { Position } from "../../models/Position";
 
 export const bishopMove = (prevX, prevY, currX, currY, team, boardState) => {
     // Up-Right movement
@@ -55,7 +56,8 @@ export const getPossibleBishopMoves = (bishop, boardState) => {
 
     // TOP-RIGHT
     for(let i = 1; i<8; i++){
-        const destination = {posX: bishop.posX + i, posY: bishop.posY + i};
+        // const destination = {posX: bishop.posX + i, posY: bishop.posY + i};
+        const destination = new Position(bishop.posX + i, bishop.posY + i);
         if(!tileIsOccupied(bishop.posX + i, bishop.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(bishop.posX + i, bishop.posY + i, boardState, bishop.teamType)){
@@ -67,7 +69,8 @@ export const getPossibleBishopMoves = (bishop, boardState) => {
     }
     // TOP-LEFT
     for(let i = 1; i<8; i++){
-        const destination = {posX: bishop.posX - i, posY: bishop.posY + i};
+        // const destination = {posX: bishop.posX - i, posY: bishop.posY + i};
+        const destination = new Position(bishop.posX - i, bishop.posY + i);
         if(!tileIsOccupied(bishop.posX - i, bishop.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(bishop.posX - i, bishop.posY + i, boardState, bishop.teamType)){
@@ -80,7 +83,8 @@ export const getPossibleBishopMoves = (bishop, boardState) => {
 
     // BOTTOM-RIGHT
     for(let i = 1; i<8; i++){
-        const destination = {posX: bishop.posX + i, posY: bishop.posY - i};
+        // const destination = {posX: bishop.posX + i, posY: bishop.posY - i};
+        const destination = new Position(bishop.posX + i, bishop.posY - i);
         if(!tileIsOccupied(bishop.posX + i, bishop.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(bishop.posX + i, bishop.posY - i, boardState, bishop.teamType)){
@@ -93,7 +97,8 @@ export const getPossibleBishopMoves = (bishop, boardState) => {
 
     // BOTTOM-LEFT
     for(let i = 1; i<8; i++){
-        const destination = {posX: bishop.posX - i, posY: bishop.posY - i};
+        // const destination = {posX: bishop.posX - i, posY: bishop.posY - i};
+        const destination = new Position(bishop.posX - i, bishop.posY - i);
         if(!tileIsOccupied(bishop.posX - i, bishop.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(bishop.posX - i, bishop.posY - i, boardState, bishop.teamType)){

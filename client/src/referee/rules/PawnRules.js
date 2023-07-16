@@ -1,3 +1,4 @@
+import { Position } from "../../models/Position";
 import { tileIsEmptyOrOccupiedByOponent, tileIsOccupied, tileIsOccupiedByOpponent } from "./GeneralRules";
 // import { Position } from "../../Constants";
 
@@ -40,10 +41,10 @@ export const GetPossiblePawnMoves = (pawn, boardState) => {
     const specialRow = (pawn.teamType === "OUR") ? 1 : 6;
 
 
-    const normalMove = {posX: pawn.posX, posY: pawn.posY + pawnDirection};
-    const specialMove = {posX: pawn.posX, posY: pawn.posY + (pawnDirection*2)};
-    const upperLeftAttack = {posX: pawn.posX - 1, posY: pawn.posY + pawnDirection};
-    const upperRightAttack = {posX: pawn.posX + 1, posY: pawn.posY + pawnDirection};
+    const normalMove = new Position(pawn.posX, pawn.posY + pawnDirection);
+    const specialMove = new Position(pawn.posX, pawn.posY + (pawnDirection*2));
+    const upperLeftAttack = new Position(pawn.posX - 1, pawn.posY + pawnDirection);
+    const upperRightAttack = new Position(pawn.posX + 1, pawn.posY + pawnDirection);
 
     if(!tileIsOccupied(pawn.posX, pawn.posY + pawnDirection, boardState)){
         possibleMoves.push(normalMove);

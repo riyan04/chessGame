@@ -121,11 +121,13 @@ const Chessboard = ({ playMove, pieces }) => {
 
             // check if the move is valid
             // console.log(pieces);
+
+            // console.log(`x: ${gridX} y: ${gridY}....grab!`)
             const currentPiece = pieces.find(p => p.posX === gridX && p.posY === gridY);
 
             if (currentPiece) {
 
-                var success = playMove(currentPiece, x, y);
+                var success = playMove(currentPiece.clone(), x, y);
                 if (!success) {
                     activePiece.style.position = "relative";
                     activePiece.style.removeProperty("top");

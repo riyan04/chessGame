@@ -1,3 +1,4 @@
+import { Position } from "../../models/Position";
 import { tileIsEmptyOrOccupiedByOponent, tileIsOccupied } from "./GeneralRules";
 
 export const queenMove = (prevX, prevY, currX, currY, team, boardState) => {
@@ -33,7 +34,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
 
     // TOP-RIGHT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX + i, posY: queen.posY + i};
+        const destination = new Position(queen.posX + i, queen.posY + i);
         if(!tileIsOccupied(queen.posX + i, queen.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX + i, queen.posY + i, boardState, queen.teamType)){
@@ -45,7 +46,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
     }
     // TOP-LEFT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX - i, posY: queen.posY + i};
+        const destination = new Position(queen.posX - i, queen.posY + i);
         if(!tileIsOccupied(queen.posX - i, queen.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX - i, queen.posY + i, boardState, queen.teamType)){
@@ -58,7 +59,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
 
     // BOTTOM-RIGHT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX + i, posY: queen.posY - i};
+        const destination = new Position(queen.posX + i, queen.posY - i);
         if(!tileIsOccupied(queen.posX + i, queen.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX + i, queen.posY - i, boardState, queen.teamType)){
@@ -71,7 +72,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
 
     // BOTTOM-LEFT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX - i, posY: queen.posY - i};
+        const destination = new Position(queen.posX - i, queen.posY - i);
         if(!tileIsOccupied(queen.posX - i, queen.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX - i, queen.posY - i, boardState, queen.teamType)){
@@ -84,7 +85,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
 
     // UP
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX, posY: queen.posY + i};
+        const destination = new Position(queen.posX, queen.posY + i);
         if(!tileIsOccupied(queen.posX, queen.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX, queen.posY + i, boardState, queen.teamType)){
@@ -96,7 +97,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
     }
     // DOWN
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX, posY: queen.posY - i};
+        const destination = new Position(queen.posX, queen.posY - i);
         if(!tileIsOccupied(queen.posX, queen.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX, queen.posY - i, boardState, queen.teamType)){
@@ -108,7 +109,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
     }
     // RIGHT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX + i, posY: queen.posY};
+        const destination = new Position(queen.posX + i, queen.posY);
         if(!tileIsOccupied(queen.posX + i, queen.posY, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX + i, queen.posY, boardState, queen.teamType)){
@@ -120,7 +121,7 @@ export const getPossibleQueenMoves = (queen, boardState) => {
     }
     // LEFT
     for(let i = 1; i<8; i++){
-        const destination = {posX: queen.posX - i, posY: queen.posY};
+        const destination = new Position(queen.posX - i, queen.posY);
         if(!tileIsOccupied(queen.posX - i, queen.posY, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(queen.posX - i, queen.posY, boardState, queen.teamType)){
