@@ -13,18 +13,33 @@ export default function Referee() {
     const modalRef = useRef(null);
 
     useEffect(() => {
-        updatePossibleMoves();
+        // updatePossibleMoves
+        board.calculateAllMoves();
     }, []);
 
-    // updatePossibleMoves()
-    function updatePossibleMoves() {
-        board.calculateAllMoves();
-    }
+
     function playMove(playedPiece, destinationX, destinationY) {
+
+        // If playing piece doesn't have any move
+        // That simply means it's invalid so simply return false;
+        if(playedPiece.possibleMoves === undefined) return false;
+
+        // Prevents inactive piece from playing if it's not its turn
+        if(playedPiece.teamType === "OUR" && board.totalTurns % 2 === 0){
+            console.log("invalid turn! -- W");
+            return false
+        }
+        if(playedPiece.teamType === "OPONENT" && board.totalTurns % 2 !== 0){
+            console.log("invalid turn! -- B");
+            return false;
+        }
 
         let playedMoveIsValid = false;
 
-        const validMode = isValidMove(playedPiece.posX, playedPiece.posY, destinationX, destinationY, playedPiece.pieceType, playedPiece.teamType);
+        // const validMode = isValidMove(playedPiece.posX, playedPiece.posY, destinationX, destinationY, playedPiece.pieceType, playedPiece.teamType);
+        const validMode = playedPiece.possibleMoves?.some(m => m.posX === destinationX && m.posY === destinationY);
+
+        if(!validMode) return false;
 
         const enPassantMove = isEnPassantMove(playedPiece.posX, playedPiece.posY, destinationX, destinationY, playedPiece.pieceType, playedPiece.teamType);
 
@@ -32,10 +47,15 @@ export default function Referee() {
         // therefore we need to call setBoard
         setBoard(() => {
 
-            // playing the move ---->>> migrate to the Board.js
-            playedMoveIsValid = board.playMove(enPassantMove, validMode, playedPiece, destinationX, destinationY)
+            const clonedBoard = board.clone();
 
-            return board.clone();
+            clonedBoard.totalTurns += 1;
+            // playing the move ---->>> migrate to the Board.js
+            playedMoveIsValid = clonedBoard.playMove(enPassantMove, validMode, playedPiece, destinationX, destinationY)
+
+            
+
+            return clonedBoard.clone();
         })
 
         // For Pawn Promotion in the 0th and 7th row
@@ -162,7 +182,6 @@ export default function Referee() {
         });
 
         // setPieces(updatedPieces);
-        // updatePossibleMoves();
         modalRef.current.classList.add("hidden")
     }
     function promotionTeamType() {
@@ -171,6 +190,7 @@ export default function Referee() {
 
     return (
         <>
+            <p style={{color: "white"}}>{board.totalTurns}</p>
             <div className=' absolute top-0 bottom-0 right-0 left-0 hidden' ref={modalRef}>
                 <div className=' absolute flex items-center justify-around  w-[720px] h-[300px] bg-black/[0.4]  top-[240px] left-[25%]'>
                     <img onClick={() => promotePawn("ROOK")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_ROOK_${promotionTeamType()}t45.svg`} />

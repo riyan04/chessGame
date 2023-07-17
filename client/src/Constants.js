@@ -79,4 +79,4 @@ export const initialBoard =  new Board([
     
 
 
-]);
+], 1);
