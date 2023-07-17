@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Chessboard from "../Chessboard/Chessboard";
 // import { initialBoard } from "../../Constants";
 // import { Board } from "../../models/Board";
@@ -8,14 +8,10 @@ import { Piece } from "../../models/Piece";
 // import { Pawn } from "../../models/Pawn";
 
 export default function Referee() {
-    const [board, setBoard] = useState(initialBoard)
+    const [board, setBoard] = useState(initialBoard.clone())
     const [promotionPawn, setPromotionPawn] = useState()
     const modalRef = useRef(null);
-
-    useEffect(() => {
-        // updatePossibleMoves
-        board.calculateAllMoves();
-    }, []);
+    const checkmateModalRef = useRef(null);
 
 
     function playMove(playedPiece, destinationX, destinationY) {
@@ -53,9 +49,14 @@ export default function Referee() {
             // playing the move ---->>> migrate to the Board.js
             playedMoveIsValid = clonedBoard.playMove(enPassantMove, validMode, playedPiece, destinationX, destinationY)
 
-            
+            if(clonedBoard.winningTeam !== undefined){
+                checkmateModalRef.current?.classList.remove("hidden");
+            }
 
-            return clonedBoard.clone();
+            // console.log(clonedBoard.pieces.filter(p => p.hasMoved).length);
+
+            // return clonedBoard.clone();
+            return clonedBoard;
         })
 
         // For Pawn Promotion in the 0th and 7th row
@@ -150,25 +151,8 @@ export default function Referee() {
             const clonedBoard = board.clone();
             clonedBoard.pieces = clonedBoard.pieces.reduce((results, piece) => {
                 if (piece.posX === promotionPawn.posX && piece.posY === promotionPawn.posY) {
-                    results.push(new Piece(piece.posX, piece.posY, type, piece.teamType));
-                    // piece.pieceType = type;
-                    // const team = (piece.teamType === "OUR") ? "OUR" : "OPONENT";
-                    // let pieceImage = "";
-                    // switch (type) {
-                    //     case "ROOK":
-                    //         pieceImage = "ROOK";
-                    //         break;
-                    //     case "KNIGHT":
-                    //         pieceImage = "KNIGHT";
-                    //         break;
-                    //     case "BISHOP":
-                    //         pieceImage = "BISHOP";
-                    //         break;
-                    //     case "QUEEN":
-                    //         pieceImage = "QUEEN";
-                    //         break;
-                    // }
-                    // piece.src = `/assets/Chess_${pieceImage}_${team}t45.svg`;
+                    results.push(new Piece(piece.posX, piece.posY, type, piece.teamType, true));
+                    
                 } else {
 
                     results.push(piece);
@@ -188,15 +172,28 @@ export default function Referee() {
         return (promotionPawn?.teamType === "OUR") ? "OUR" : "OPONENT";
     }
 
+    function restartGame(){
+        checkmateModalRef.current?.classList.add("hidden");
+        setBoard(initialBoard.clone());
+    }
+
     return (
         <>
-            <p style={{color: "white"}}>{board.totalTurns}</p>
+            <p className=" text-white text-center">Turn: {(board.totalTurns % 2 !== 0) ? "White" : "Black"}</p>
             <div className=' absolute top-0 bottom-0 right-0 left-0 hidden' ref={modalRef}>
                 <div className=' absolute flex items-center justify-around  w-[720px] h-[300px] bg-black/[0.4]  top-[240px] left-[25%]'>
                     <img onClick={() => promotePawn("ROOK")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_ROOK_${promotionTeamType()}t45.svg`} />
                     <img onClick={() => promotePawn("KNIGHT")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_KNIGHT_${promotionTeamType()}t45.svg`} />
                     <img onClick={() => promotePawn("BISHOP")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_BISHOP_${promotionTeamType()}t45.svg`} />
                     <img onClick={() => promotePawn("QUEEN")} className=' h-[120px] rounded-lg hover:cursor-pointer hover:bg-slate-400/[0.3]' src={`/assets/Chess_QUEEN_${promotionTeamType()}t45.svg`} />
+                </div>
+            </div>
+            <div className=' absolute top-0 bottom-0 right-0 left-0 hidden' ref={checkmateModalRef}>
+                <div className=' absolute flex items-center justify-around  w-[720px] h-[300px] bg-black/[0.4]  top-[240px] left-[25%]'>
+                    <div className=' flex flex-col gap-[48px]'>
+                        <span className=' text-[32px] text-white'>The winning team is {board.winningTeam === "OUR" ? "White" : "Black"}!</span>
+                        <button onClick={restartGame} className=' bg-[#759656] rounded-[20px] text-white text-[16px] px-[12px] py-[12px] hover:cursor-pointer hover:bg-[#d9f0c4] hover:text-black'>Play Again</button>
+                    </div>
                 </div>
             </div>
             <Chessboard

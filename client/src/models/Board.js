@@ -1,4 +1,4 @@
-import { GetPossiblePawnMoves, getPossibleBishopMoves, getPossibleKingMoves, getPossibleKnightMoves, getPossibleQueenMoves, getPossibleRookMoves } from "../referee/rules";
+import { GetPossiblePawnMoves, getCastlingMoves, getPossibleBishopMoves, getPossibleKingMoves, getPossibleKnightMoves, getPossibleQueenMoves, getPossibleRookMoves } from "../referee/rules";
 import { Pawn } from "./Pawn";
 // import { Piece } from "./Piece"
 Pawn
@@ -6,6 +6,7 @@ Pawn
 export class Board {
     pieces;
     totalTurns;
+    winningTeam;
 
     constructor(pieces, totalTurns) {
         this.pieces = pieces
@@ -22,6 +23,11 @@ export class Board {
             piece.possibleMoves = this.getValidMoves(piece, this.pieces);
         }
         
+        // Figure out castling moves!
+        for(const king of this.pieces.filter(p => p.isKing)){
+            if(king.possibleMoves === undefined) continue;
+            king.possibleMoves = [...king.possibleMoves, ...getCastlingMoves(king, this.pieces)];
+        }
 
         // checking current team moves
         this.checkCurrentTeamMoves();
@@ -30,6 +36,15 @@ export class Board {
         for(const piece of this.pieces.filter(p => p.teamType !== this.currentTeam)){
             piece.possibleMoves = [];
         }
+
+        // Check if the playing team has moves?
+        // If NO!? then it's a checkmate!
+        // const possibleMoves = this.pieces.filter(p => p.teamType === this.currentTeam).map(p => p.possibleMoves);
+        // console.log(possibleMoves);
+
+        if(this.pieces.filter(p => p.teamType === this.currentTeam).some(p => p.possibleMoves !== undefined && p.possibleMoves.length > 0)) return;
+
+        this.winningTeam = (this.currentTeam === "OUR") ? "OPONENT" : "OUR";
 
     }
 
@@ -97,6 +112,27 @@ export class Board {
 
     playMove = (enPassantMove, validMode, playedPiece, destinationX, destinationY) => {
         const pawnDirection = (playedPiece.teamType === "OUR") ? 1 : -1;
+        const destinationPiece = this.pieces.find(p => p.posX === destinationX && p.posY === destinationY);
+
+        // If the move is a castling move -->>>
+        if(playedPiece.isKing && destinationPiece?.isRook && destinationPiece.teamType === playedPiece.teamType){
+            const direction = (destinationPiece.posX - playedPiece.posX > 0) ? 1 : -1;
+            const newKingXPosition = playedPiece.posX + (direction * 2);
+
+            this.pieces = this.pieces.map(p => {
+                if(p.posX === playedPiece.posX && p.posY === playedPiece.posY){
+                    p.posX = newKingXPosition;
+                } else if(p.posX === destinationPiece.posX && p.posY === destinationPiece.posY){
+                    p.posX = newKingXPosition - direction;
+                }
+                return p
+            });
+
+            this.calculateAllMoves();
+            return true;
+        }
+
+
         if (enPassantMove) {
             this.pieces = this.pieces.reduce((results, piece) => {
                 if (piece.posX === playedPiece.posX && piece.posY === playedPiece.posY) {
@@ -106,6 +142,7 @@ export class Board {
                     }
                     piece.posX = destinationX;
                     piece.posY = destinationY;
+                    piece.hasMoved = true;
                     results.push(piece);
                 } else if (!(piece.posX === destinationX && piece.posY === destinationY - pawnDirection)) {
                     if (piece.isPawn) {
@@ -138,12 +175,9 @@ export class Board {
 
                         piece.pieceEnPassant = (Math.abs(playedPiece.posY - destinationY) === 2 && piece.pieceType === "PAWN") ? true : false;
                     }
-                    // console.log(`x: ${piece.posX}, y: ${piece.posY}...piece position before!!`);
-                    // console.log(`x: ${playedPiece.posX}, y: ${playedPiece.posY}...playedPiece position before!!`);
                     piece.posX = destinationX;
                     piece.posY = destinationY;
-                    // console.log(`x: ${piece.posX}, y: ${piece.posY}...piece position after!!`);
-                    // console.log(`x: ${playedPiece.posX}, y: ${playedPiece.posY}...playedPiece position after!!`);
+                    piece.hasMoved = true;
 
                     results.push(piece);
                 } else if (!(piece.posX === destinationX && piece.posY === destinationY)) {

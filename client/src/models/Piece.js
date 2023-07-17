@@ -1,21 +1,3 @@
-// export class Piece{
-//     image;
-//     posX;
-//     posY;
-//     pieceType;
-//     teamType;
-//     enpassant;
-//     possibleMoves;
-
-//     constructor(image, x, y, type, team){
-//         this.image = image,
-//         this.posX = x,
-//         this.posY = y,
-//         this.type = type,
-//         this.team = team
-//     }
-// }
-
 export class Piece{
     src;
     posX;
@@ -24,7 +6,8 @@ export class Piece{
     teamType;
     // pieceEnPassant;
     possibleMoves;
-    constructor(x, y, type, team, /*enPassant = false*/ moves = []){
+    hasMoved;
+    constructor(x, y, type, team, /*enPassant = false*/ hasMoved, moves = []){
         this.src = `/assets/Chess_${type}_${team}t45.svg`;
         this.posX = x;
         this.posY = y;
@@ -32,6 +15,7 @@ export class Piece{
         this.teamType = team;
         // this.pieceEnPassant = enPassant;
         this.possibleMoves = moves;
+        this.hasMoved = hasMoved;
     }
 
     get isPawn(){
@@ -54,6 +38,6 @@ export class Piece{
     }
 
     clone(){
-        return new Piece(this.posX, this.posY, this.pieceType, this.teamType, this.possibleMoves?.map(m => m.clone()))
+        return new Piece(this.posX, this.posY, this.pieceType, this.teamType, this.hasMoved, this.possibleMoves?.map(m => m.clone()))
     }
 }

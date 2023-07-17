@@ -55,7 +55,10 @@ export const getPossibleRookMoves = (rook, boardState) => {
 
     // UP
     for(let i = 1; i<8; i++){
+        if(rook.posY + i > 7) break;
+
         const destination = new Position(rook.posX, rook.posY + i);
+        
         if(!tileIsOccupied(rook.posX, rook.posY + i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(rook.posX, rook.posY + i, boardState, rook.teamType)){
@@ -67,7 +70,10 @@ export const getPossibleRookMoves = (rook, boardState) => {
     }
     // DOWN
     for(let i = 1; i<8; i++){
+        if(rook.posY - i < 0) break;
+
         const destination = new Position(rook.posX, rook.posY - i);
+
         if(!tileIsOccupied(rook.posX, rook.posY - i, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(rook.posX, rook.posY - i, boardState, rook.teamType)){
@@ -79,7 +85,10 @@ export const getPossibleRookMoves = (rook, boardState) => {
     }
     // RIGHT
     for(let i = 1; i<8; i++){
+        if(rook.posX + i > 7) break;
+
         const destination = new Position(rook.posX + i, rook.posY);
+
         if(!tileIsOccupied(rook.posX + i, rook.posY, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(rook.posX + i, rook.posY, boardState, rook.teamType)){
@@ -91,7 +100,10 @@ export const getPossibleRookMoves = (rook, boardState) => {
     }
     // LEFT
     for(let i = 1; i<8; i++){
+        if(rook.posX - i < 0) break;
+
         const destination = new Position(rook.posX - i, rook.posY);
+
         if(!tileIsOccupied(rook.posX - i, rook.posY, boardState)){
             possibleMoves.push(destination);
         } else if (tileIsEmptyOrOccupiedByOponent(rook.posX - i, rook.posY, boardState, rook.teamType)){
