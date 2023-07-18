@@ -1,15 +1,7 @@
 import { useRef, useState } from 'react'
-// import { PropTypes } from 'prop-types'
 import Tile from '../Tile/Tile'
-// import "./Chessboard.css";
-// import Referee from '../../referee/Referee'
-// import { verticalAxis, horizontalAxis, GRID_SIZE } from '../../Constants'
 import { verticalAxis, horizontalAxis, GRID_SIZE } from '../../Constants'
 
-// class Props {
-//     getPossibleMoves = () => [];
-//     playMoves = () => {};
-// }
 
 
 
@@ -76,7 +68,7 @@ const Chessboard = ({ playMove, pieces }) => {
         if (activePiece && chessboard) {
             // if yes the move the piece
 
-            // console.log(e.target);
+            
 
             const minX = (chessboard.offsetLeft) - 20;
             const minY = (chessboard.offsetTop) - 20;
@@ -120,9 +112,9 @@ const Chessboard = ({ playMove, pieces }) => {
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 720) / GRID_SIZE));
 
             // check if the move is valid
-            // console.log(pieces);
+            
 
-            // console.log(`x: ${gridX} y: ${gridY}....grab!`)
+            
             const currentPiece = pieces.find(p => p.posX === gridX && p.posY === gridY);
 
             if (currentPiece) {

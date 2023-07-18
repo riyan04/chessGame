@@ -1,7 +1,5 @@
 import { useRef, useState } from "react";
 import Chessboard from "../Chessboard/Chessboard";
-// import { initialBoard } from "../../Constants";
-// import { Board } from "../../models/Board";
 import { initialBoard } from "../../Constants";
 import { bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from "../../referee/rules";
 import { Piece } from "../../models/Piece";
@@ -32,7 +30,6 @@ export default function Referee() {
 
         let playedMoveIsValid = false;
 
-        // const validMode = isValidMove(playedPiece.posX, playedPiece.posY, destinationX, destinationY, playedPiece.pieceType, playedPiece.teamType);
         const validMode = playedPiece.possibleMoves?.some(m => m.posX === destinationX && m.posY === destinationY);
 
         if(!validMode) return false;
@@ -55,7 +52,6 @@ export default function Referee() {
 
             // console.log(clonedBoard.pieces.filter(p => p.hasMoved).length);
 
-            // return clonedBoard.clone();
             return clonedBoard;
         })
 
