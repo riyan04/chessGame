@@ -47,6 +47,8 @@ const Chessboard = ({ playMove, pieces }) => {
             const x = e.clientX - (GRID_SIZE / 2);
             const y = e.clientY - (GRID_SIZE / 2);
 
+            console.log({x: x, y: y})
+
             // make the position absolute and set the position by manipulating left and top coordinates
             element.style.position = "absolute";
             element.style.left = `${x}px`;

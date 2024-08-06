@@ -6,6 +6,10 @@ import './App.css'
 
 
 const App = () => {
+  const isMobile = navigator.userAgentData.mobile
+  if(isMobile){
+    alert("CAN'T PLAY ON MOBILE OR TABLET \n PLEASE SWITCH TO DESKTOP")
+  }
   return (
     <div>
       <Referee />
